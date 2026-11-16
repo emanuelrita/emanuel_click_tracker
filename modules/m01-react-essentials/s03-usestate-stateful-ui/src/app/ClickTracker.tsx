@@ -14,6 +14,14 @@ export default function TrackerComponent() {
   const [history, setHistory] = useState<number[]>([]);
   const [settings, setSettings] = useState(defaultSettings);
 
+  const IncrementCounter = () => {
+    const next = count + 1;
+    setCount(next);
+    setHistory((previous) => [...previous, next]);
+    if (next % 5 === 0)
+      setColor((previous) => (previous === "blue" ? "red" : "blue"));
+  };
+
   return (
     <section className={styles.tracker} aria-label="Click tracker">
       <header className={styles.header}>
@@ -31,12 +39,7 @@ export default function TrackerComponent() {
         <button
           className={`${styles.button} ${styles.primary}`}
           disabled={count >= settings.maxClicks}
-          onClick={() => {
-            setCount(count + 1);
-            setHistory((previous) => [...previous, count + 1]);
-            if ((count + 1) % 5 === 0)
-              setColor(color === "blue" ? "red" : "blue");
-          }}
+          onClick={IncrementCounter}
         >
           Click me
         </button>
